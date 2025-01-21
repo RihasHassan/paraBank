@@ -197,7 +197,7 @@ test ('Validate if Accounts overview page is displaying the balance details as e
 
 
 
-test('Transfer funds from account created in step 5 to another account.',async()=>{
+test('Transfer funds from newly account created to another account.',async()=>{
 
     await homePageObj.getRegiterationLink().click()
     await page.waitForTimeout(2000)
@@ -400,26 +400,21 @@ test('Verify if the Global navigation menu in home page is working as expected.'
 
                 const href = await anchor.getAttribute('href');
                 console.log(`Link: ${href}`);
-
-
                 await expect.soft(href).not.toBeNull();
                 await expect.soft(href).not.toBe('');
                 let url = environment.baseURL;
                 const absoluteUrl = new URL(href, url).toString();
                 console.log(`Absolute URL: ${absoluteUrl}`);
-                // Check if the link is working
                 const response = await page.request.get(absoluteUrl);
-                // Soft assertion for response status
-                await expect.soft(response.ok()).toBeTruthy(); // Ensure the response status is 200-299
+                await expect.soft(response.ok()).toBeTruthy();
                 console.log(`Link ${i + 1} is valid with status: ${response.status()}`);
 
             }
         }
 
         catch (error) {
-            // Log the specific error for the current link
             console.error(`Error with link ${i + 1}: ${error.message}`);
-            // Continue with the next link even if there's an error in the current iteration
+        
         }
     }
 
